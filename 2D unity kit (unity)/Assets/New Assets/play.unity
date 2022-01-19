@@ -406,6 +406,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1488701847}
+  speed: 1
+  Jump: 25
 --- !u!50 &1488701851
 Rigidbody2D:
   serializedVersion: 4
@@ -426,7 +428,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!61 &1488701852
 BoxCollider2D:
   m_ObjectHideFlags: 0
