@@ -8,6 +8,10 @@ public class PlayerControlller : MonoBehaviour
    public float speed;
    public float Jump;
    private Rigidbody2D rb2D;
+   bool isGroundCheck;
+   public Transform GraundCheck;
+   public LayerMask GraundLayer;
+
 
     
     private void Awake()
@@ -19,9 +23,11 @@ public class PlayerControlller : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Jump");
+        isGroundCheck = Physics2D.OverlapCircle(GraundCheck.position,0.2f,GraundLayer);
 
         MoveCharacter(horizontal, vertical);
         PlayMovementAnimation(horizontal, vertical);
+         
     }
 
     private void MoveCharacter(float horizontal, float vertical){
@@ -29,8 +35,15 @@ public class PlayerControlller : MonoBehaviour
         position.x = position.x + horizontal * speed * Time.deltaTime;
         transform.position = position;
 
+
+        //Jump
         if(vertical > 0){
-           rb2D.AddForce(new Vector2(0f,Jump), ForceMode2D.Force); 
+
+            if (isGroundCheck) {
+                rb2D.AddForce(new Vector2(0f,Jump), ForceMode2D.Force);
+            }
+
+           
         }
     }
 
@@ -48,24 +61,23 @@ public class PlayerControlller : MonoBehaviour
        
         if (Input.GetButtonDown("Jump")) {
             animator.SetTrigger("jump");
-        };
+            rb2D.AddForce(new Vector2(0f,Jump), ForceMode2D.Force);
+        }
 
         //Crourch
 
         if (Input.GetButtonDown("Fire1")) {
             animator.SetTrigger("Crourch");
+        }
+
+         //Run
+         if (Input.GetButtonDown("Fire3")) {
+            animator.SetBool("Run", true);
+         }
+
+        else if(Input.GetButtonUp("Fire3")) {
+             animator.SetBool("Run", false); 
         };
-
-        // // Run
-        // if (Input.GetButtonDown("Fire3 > ")) {
-        //     animator.SetBool("Run", true);
-        // }
-
-        // else (Input.GetButtonDown("Fire3"))
-        // {
-        //     animator.SetBool("Run", false);
-        // }
-        
 
     }
     
