@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerControlller : MonoBehaviour
 {
+    public ScoreController scoreController;
    public Animator animator;
    public float speed;
    public float Jump;
@@ -16,7 +17,15 @@ public class PlayerControlller : MonoBehaviour
     
     private void Awake()
     {
+
         rb2D = gameObject.GetComponent<Rigidbody2D>();
+        
+    }
+
+    public void PickUpKey()
+    {
+        Debug.Log("Player picked up the key");
+        scoreController.IncreaseScore(10);
     }
 
     private void Update()
