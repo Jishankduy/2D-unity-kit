@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControlller : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class PlayerControlller : MonoBehaviour
    bool isGroundCheck;
    public Transform GraundCheck;
    public LayerMask GraundLayer;
+   private bool DoubleJump;
+   public CapsuleCollider2D Player;
 
 
     
@@ -19,6 +22,7 @@ public class PlayerControlller : MonoBehaviour
     {
 
         rb2D = gameObject.GetComponent<Rigidbody2D>();
+        Player.GetComponent<CapsuleCollider2D>();
         
     }
 
@@ -36,7 +40,22 @@ public class PlayerControlller : MonoBehaviour
 
         MoveCharacter(horizontal, vertical);
         PlayMovementAnimation(horizontal, vertical);
-         
+
+        if (Input.GetKeyDown("s")){
+
+            //CrouchCollider();
+            Player.size = new Vector3 (0.4885478f,1,0);
+            Player.offset = new Vector3(0.0f,0.5f,0);
+            animator.SetBool("CrourchDown", true);
+
+        }
+
+        if (Input.GetKeyUp("s")) 
+        {
+            Player.size = new Vector3 (0.4885478f,2.0268663f,0);
+            Player.offset = new Vector3(0.01128936f,0.9971762f,0);
+            animator.SetBool("CrourchDown", false);
+        }
     }
 
     private void MoveCharacter(float horizontal, float vertical){
@@ -46,15 +65,36 @@ public class PlayerControlller : MonoBehaviour
 
 
         //Jump
-        if(vertical > 0){
+        //if(vertical > 0){
 
-            if (isGroundCheck) {
-                rb2D.AddForce(new Vector2(0f,Jump), ForceMode2D.Force);
-            }
+          //  if (Input.GetKeyDown(KeyCode.Space) && isGroundCheck) {
+            //    rb2D.AddForce(new Vector2(0f,Jump), ForceMode2D.Impulse);
+              //  isGroundCheck = false;
+                //DoubleJump = true;
+           // }
+            //else if (DoubleJump){
+              //  DoubleJump =false;
 
-           
-        }
+            //}  
+       // }
+       if (Input.GetKeyDown(KeyCode.Space)){
+           if (isGroundCheck){
+               JumpUP();
+               DoubleJump = true;
+           }
+           else if (DoubleJump){
+               JumpUP();
+               DoubleJump = false;
+           }
+       }
     }
+
+    // Jump
+    void JumpUP(){
+        rb2D.velocity = Vector2.up * Jump;
+    }
+    
+
 
     private void PlayMovementAnimation(float horizontal, float vertical) {
         animator.SetFloat("Speed",Mathf.Abs(horizontal));
@@ -69,13 +109,16 @@ public class PlayerControlller : MonoBehaviour
         //Jump
        
         if (Input.GetButtonDown("Jump")) {
-            animator.SetTrigger("jump");
+            if (isGroundCheck){
+                animator.SetTrigger("jump");
+            }
+           // animator.SetTrigger("jump");
             rb2D.AddForce(new Vector2(0f,Jump), ForceMode2D.Force);
         }
 
         //Crourch
 
-        if (Input.GetButtonDown("Fire1")) {
+        if (Input.GetKeyDown("s")) {
             animator.SetTrigger("Crourch");
         }
 

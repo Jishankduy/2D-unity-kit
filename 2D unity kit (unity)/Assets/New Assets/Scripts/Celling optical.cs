@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SharpPainWood : MonoBehaviour
+public class Cellingoptical : MonoBehaviour
 {
     public PlayerControlller playerController;
-    private void OnTriggerEnter2D(Collider2D collision) {
-        
-         if(collision.gameObject.GetComponent<PlayerControlller>() !=null)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.gameObject.GetComponent<PlayerControlller>() != null)
         {
             StartCoroutine(DeathScene());
         }
 
-         IEnumerator DeathScene()
+        IEnumerator DeathScene()
         {
             playerController.animator.SetTrigger("Death");
             yield return new WaitForSeconds(0.8f);
@@ -21,9 +22,10 @@ public class SharpPainWood : MonoBehaviour
         }
 
 
-        void Reloadlevel(){
+        void Reloadlevel()
+        {
             SceneManager.LoadScene(0);
         }
-        
+
     }
 }
