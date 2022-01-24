@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SharpPainWood : MonoBehaviour
 {
+    public GameOverController gameOverController;
     public PlayerControlller playerController;
     private void OnTriggerEnter2D(Collider2D collision) {
         
@@ -17,12 +18,7 @@ public class SharpPainWood : MonoBehaviour
         {
             playerController.animator.SetTrigger("Death");
             yield return new WaitForSeconds(0.8f);
-            Reloadlevel();
-        }
-
-
-        void Reloadlevel(){
-            SceneManager.LoadScene(0);
+            gameOverController.PlayerDied();
         }
         
     }
