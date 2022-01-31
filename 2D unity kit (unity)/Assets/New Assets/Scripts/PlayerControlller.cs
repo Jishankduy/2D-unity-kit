@@ -16,6 +16,7 @@ public class PlayerControlller : MonoBehaviour
    private bool DoubleJump;
    public CapsuleCollider2D Player;
 
+   [SerializeField]private AudioSource JumpSoundUp;
 
     
     private void Awake()
@@ -30,6 +31,7 @@ public class PlayerControlller : MonoBehaviour
     {
         Debug.Log("Player picked up the key");
         scoreController.IncreaseScore(10);
+
     }
 
     private void Update()
@@ -81,6 +83,7 @@ public class PlayerControlller : MonoBehaviour
            if (isGroundCheck){
                JumpUP();
                DoubleJump = true;
+               JumpSoundUp.Play();
            }
            else if (DoubleJump){
                JumpUP();
