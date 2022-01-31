@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameOverController : MonoBehaviour
+public class LevelFinishController : MonoBehaviour
 {
     public Button buttonRestast;
 
@@ -12,7 +12,7 @@ public class GameOverController : MonoBehaviour
         buttonRestast.onClick.AddListener(Reloadlevel);
     }
 
-    public void PlayerDied(){
+    public void PlayerWin(){
         gameObject.SetActive(true);
     }
 
